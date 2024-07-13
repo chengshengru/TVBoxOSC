@@ -14,7 +14,6 @@ import com.github.tvbox.osc.bean.LiveChannelItem;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.server.ControlManager;
-import com.github.tvbox.osc.util.AdBlocker;
 import com.github.tvbox.osc.util.DefaultConfig;
 import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.MD5;
@@ -281,6 +280,13 @@ public class ApiConfig {
         // 直播源
         liveChannelGroupList.clear();           //修复从后台切换重复加载频道列表
         try {
+            /**
+             * {
+             *     "lives": [
+             *         "proxy://example.com/stream1?ext=clan://example.com/stream2"
+             *     ]
+             * }
+             */
             String lives = infoJson.get("lives").getAsJsonArray().toString();
             int index = lives.indexOf("proxy://");
             if (index != -1) {
@@ -308,10 +314,36 @@ public class ApiConfig {
             th.printStackTrace();
         }
         // IJK解码配置
+        loadIJKConfig(infoJson.get("ijk").getAsJsonArray());
+    }
+
+    /**
+     * <pre>
+     *     [
+     *          {
+     *             "group": "Codec1",
+     *             "options": [
+     *                 {
+     *                     "category": "Category1",
+     *                     "name": "Option1",
+     *                     "value": "Value1"
+     *                 },
+     *                 {
+     *                     "category": "Category2",
+     *                     "name": "Option2",
+     *                     "value": "Value2"
+     *                 }
+     *             ]
+     *         },
+     *     ]
+     * </pre>
+     * IJK解码配置
+     */
+    public void loadIJKConfig(JsonArray ijkConfigArray){
         boolean foundOldSelect = false;
         String ijkCodec = Hawk.get(HawkConfig.IJK_CODEC, "");
         ijkCodes = new ArrayList<>();
-        for (JsonElement opt : infoJson.get("ijk").getAsJsonArray()) {
+        for (JsonElement opt : ijkConfigArray) {
             JsonObject obj = (JsonObject) opt;
             String name = obj.get("group").getAsString();
             LinkedHashMap<String, String> baseOpt = new LinkedHashMap<>();
@@ -338,6 +370,31 @@ public class ApiConfig {
         }
     }
 
+    /**
+     * <pre>
+     * [
+     *     {
+     *         "group": "Group1",
+     *         "channels": [
+     *             {
+     *                 "name": "Channel1",
+     *                 "urls": [
+     *                     "http://example.com/source1$Source1",
+     *                     "http://example.com/source2$Source2"
+     *                 ]
+     *             },
+     *             {
+     *                 "name": "Channel2",
+     *                 "urls": [
+     *                     "http://example.com/source3$Source3"
+     *                 ]
+     *             }
+     *         ]
+     *     },
+     * ]
+     * </pre>
+     * @param livesArray
+     */
     public void loadLives(JsonArray livesArray) {
         liveChannelGroupList.clear();
         int groupIndex = 0;
