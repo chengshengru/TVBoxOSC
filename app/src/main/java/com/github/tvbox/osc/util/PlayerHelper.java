@@ -33,9 +33,9 @@ public class PlayerHelper {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        IJKCode codec = ApiConfig.get().getIJKCodec(ijkCode);
         PlayerFactory playerFactory;
         if (playerType == 1) {
+            IJKCode codec = ApiConfig.get().getIJKCodec(ijkCode);
             playerFactory = new PlayerFactory<IjkMediaPlayer>() {
                 @Override
                 public IjkMediaPlayer createPlayer(Context context) {
