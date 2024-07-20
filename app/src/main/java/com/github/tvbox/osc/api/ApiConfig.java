@@ -339,7 +339,7 @@ public class ApiConfig {
      * </pre>
      * IJK解码配置
      */
-    public void loadIJKConfig(JsonArray ijkConfigArray){
+    public void loadIJKConfig(JsonArray ijkConfigArray) {
         boolean foundOldSelect = false;
         String ijkCodec = Hawk.get(HawkConfig.IJK_CODEC, "");
         ijkCodes = new ArrayList<>();
@@ -393,6 +393,7 @@ public class ApiConfig {
      *     },
      * ]
      * </pre>
+     *
      * @param livesArray
      */
     public void loadLives(JsonArray livesArray) {
@@ -512,6 +513,11 @@ public class ApiConfig {
         return mHomeSource == null ? emptyHome : mHomeSource;
     }
 
+    /**
+     * 获取直播频道组列表
+     *
+     * @return
+     */
     public List<LiveChannelGroup> getChannelGroupList() {
         return liveChannelGroupList;
     }
