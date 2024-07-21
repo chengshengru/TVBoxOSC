@@ -43,7 +43,7 @@ public class SettingActivity extends BaseActivity {
     private int sortFocused = 0;
     private Handler mHandler = new Handler();
     private String homeSourceKey;
-    private String currentApi;
+    private String currentApi = ApiConfig.DEFAULT_API_URL;
     private int homeRec;
     private int dnsOpt;
 
@@ -106,7 +106,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void initData() {
-        currentApi = Hawk.get(HawkConfig.API_URL, "");
+        currentApi = Hawk.get(HawkConfig.API_URL, ApiConfig.DEFAULT_API_URL);
         homeSourceKey = ApiConfig.get().getHomeSourceBean().getKey();
         homeRec = Hawk.get(HawkConfig.HOME_REC, 0);
         dnsOpt = Hawk.get(HawkConfig.DOH_URL, 0);

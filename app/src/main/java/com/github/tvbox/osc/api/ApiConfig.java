@@ -45,6 +45,9 @@ import java.util.Map;
  * @description:
  */
 public class ApiConfig {
+
+    public static final String DEFAULT_API_URL = "https://github.moeyy.xyz/https://raw.githubusercontent.com/wwb521/live/main/movies.json";
+
     private static ApiConfig instance;
     private LinkedHashMap<String, SourceBean> sourceBeanList;
     private SourceBean mHomeSource;
@@ -255,16 +258,18 @@ public class ApiConfig {
         }
         // 需要使用vip解析的flag
         vipParseFlags = DefaultConfig.safeJsonStringList(infoJson, "flags");
-        // 解析地址
-        for (JsonElement opt : infoJson.get("parses").getAsJsonArray()) {
-            JsonObject obj = (JsonObject) opt;
-            ParseBean pb = new ParseBean();
-            pb.setName(obj.get("name").getAsString().trim());
-            pb.setUrl(obj.get("url").getAsString().trim());
-            String ext = obj.has("ext") ? obj.get("ext").getAsJsonObject().toString() : "";
-            pb.setExt(ext);
-            pb.setType(DefaultConfig.safeJsonInt(obj, "type", 0));
-            parseBeanList.add(pb);
+        if(infoJson.has("parses")){
+            // 解析地址
+            for (JsonElement opt : infoJson.get("parses").getAsJsonArray()) {
+                JsonObject obj = (JsonObject) opt;
+                ParseBean pb = new ParseBean();
+                pb.setName(obj.get("name").getAsString().trim());
+                pb.setUrl(obj.get("url").getAsString().trim());
+                String ext = obj.has("ext") ? obj.get("ext").getAsJsonObject().toString() : "";
+                pb.setExt(ext);
+                pb.setType(DefaultConfig.safeJsonInt(obj, "type", 0));
+                parseBeanList.add(pb);
+            }
         }
         // 获取默认解析
         if (parseBeanList != null && parseBeanList.size() > 0) {
@@ -308,13 +313,13 @@ public class ApiConfig {
                 liveChannelGroup.setGroupName(url);
                 liveChannelGroupList.add(liveChannelGroup);
             } else {
-                loadLives(infoJson.get("lives").getAsJsonArray());
+                // loadLives(infoJson.get("lives").getAsJsonArray());
             }
         } catch (Throwable th) {
             th.printStackTrace();
         }
         // IJK解码配置
-        loadIJKConfig(infoJson.get("ijk").getAsJsonArray());
+        //loadIJKConfig(infoJson.get("ijk").getAsJsonArray());
     }
 
     /**
