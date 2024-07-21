@@ -60,7 +60,7 @@ import java.util.List;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements View.OnClickListener{
     private LinearLayout topLayout;
     private LinearLayout contentLayout;
     private TextView tvDate;
@@ -83,7 +83,7 @@ public class HomeActivity extends BaseActivity {
         public void run() {
             Date date = new Date();
             @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
             tvDate.setText(timeFormat.format(date));
             mHandler.postDelayed(this, 1000);
         }
@@ -114,6 +114,7 @@ public class HomeActivity extends BaseActivity {
     private void initView() {
         this.topLayout = findViewById(R.id.topLayout);
         this.tvDate = findViewById(R.id.tvDate);
+        findViewById(R.id.tvSetting).setOnClickListener(this);
         this.contentLayout = findViewById(R.id.contentLayout);
         this.mGridView = findViewById(R.id.mGridView);
         this.mViewPager = findViewById(R.id.mViewPager);
@@ -523,4 +524,13 @@ public class HomeActivity extends BaseActivity {
         ControlManager.get().stopServer();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tvSetting:
+                jumpActivity(SettingActivity.class);
+                break;
+            default:break;
+        }
+    }
 }

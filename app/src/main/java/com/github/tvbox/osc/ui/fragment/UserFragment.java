@@ -50,7 +50,7 @@ import java.util.List;
 public class UserFragment extends BaseLazyFragment implements View.OnClickListener {
     private LinearLayout tvLive;
     private LinearLayout tvSearch;
-    private LinearLayout tvSetting;
+    //private LinearLayout tvSetting;
     private LinearLayout tvHistory;
     private LinearLayout tvCollect;
     private LinearLayout tvPush;
@@ -100,19 +100,19 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
         EventBus.getDefault().register(this);
         tvLive = findViewById(R.id.tvLive);
         tvSearch = findViewById(R.id.tvSearch);
-        tvSetting = findViewById(R.id.tvSetting);
+        //tvSetting = findViewById(R.id.tvSetting);
         tvCollect = findViewById(R.id.tvFavorite);
         tvHistory = findViewById(R.id.tvHistory);
         tvPush = findViewById(R.id.tvPush);
         tvLive.setOnClickListener(this);
         tvSearch.setOnClickListener(this);
-        tvSetting.setOnClickListener(this);
+        //tvSetting.setOnClickListener(this);
         tvHistory.setOnClickListener(this);
         tvPush.setOnClickListener(this);
         tvCollect.setOnClickListener(this);
         tvLive.setOnFocusChangeListener(focusChangeListener);
         tvSearch.setOnFocusChangeListener(focusChangeListener);
-        tvSetting.setOnFocusChangeListener(focusChangeListener);
+        //tvSetting.setOnFocusChangeListener(focusChangeListener);
         tvHistory.setOnFocusChangeListener(focusChangeListener);
         tvPush.setOnFocusChangeListener(focusChangeListener);
         tvCollect.setOnFocusChangeListener(focusChangeListener);
@@ -242,7 +242,7 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
         } else if (v.getId() == R.id.tvSearch) {
             jumpActivity(SearchActivity.class);
         } else if (v.getId() == R.id.tvSetting) {
-            jumpActivity(SettingActivity.class);
+            //jumpActivity(SettingActivity.class);
         } else if (v.getId() == R.id.tvHistory) {
             jumpActivity(HistoryActivity.class);
         } else if (v.getId() == R.id.tvPush) {
